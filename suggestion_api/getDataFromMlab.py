@@ -17,10 +17,11 @@ def getAllRecode():
 def getCoWorkingRecommended(dataRecomment,dataCoWork):
     # print(dataRecomment)
     # print('##########################')
-    print(type(dataCoWork[0]['_id']))
+    # print(type(dataCoWork[0]['_id']))
+    print(len(dataCoWork))
     listDataRecommendation= []
     for i in dataRecomment:
-        print(type(i))
+        # print(type(i))
         for n in range(len(dataCoWork)):
             if str(dataCoWork[n]['_id']) == i:
                 listDataRecommendation.append(dataCoWork[n])
@@ -46,32 +47,22 @@ def suggestionAlgorithm(self):
         listCoWork.append(i)
         listCoWorkID.append(str(i['_id']))
     listCoWorkID.sort()
-    # print(listCoWorkID)
-    # print("######################")
     distance = []
     for i in range(len(listCoWork)):
         distance.append(great_circle((listCoWork[i]['latitude'],listCoWork[i]['longitude']), (self['latitude'],self['longtitude'])).meters/1000)
     dfDistance = pd.DataFrame(distance,columns=['distance'])
-    # print(dfDistance)
-    # print("######################")
     dataUserBooked = getAllRecode()
     listCoWorkBooked = []
     for i in dataUserBooked:
         listCoWorkBooked.append(i)
-    dfCoWorkBooked1 = pd.DataFrame(listCoWorkBooked).sort_values(by=['coworking_id'])
-    dfCoWorkBooked = dfCoWorkBooked1.reset_index(drop=True)
-    # print(dfCoWorkBooked)
-    # print("######################")
+    dfCoWorkBooked = pd.DataFrame(listCoWorkBooked).sort_values(by=['coworking_id'])
+    dfCoWorkBooked = dfCoWorkBooked.reset_index(drop=True)
     listAverageRating = []
     listCountRating   = []
     baseData = dfCoWorkBooked['coworking_id'][0]
     rating   = 0
     countRating = 0
-
     for i in range(len(dfCoWorkBooked)):
-        # print(dfCoWorkBooked['coworking_id'][i])
-        # print(baseData)
-        # print('#########################')
         if dfCoWorkBooked['coworking_id'][i] == baseData :
             if  dfCoWorkBooked['rating'][i]>0 :
                 countRating = countRating+1
@@ -86,11 +77,10 @@ def suggestionAlgorithm(self):
             if i == len(dfCoWorkBooked)-1 :
                 listAverageRating.append(rating/countRating)
                 listCountRating.append(countRating)
-    # print(listCountRating)
-    # print(listAverageRating)
-    dfDistance['coworking_id'] = listCoWorkID
-    dfDistance['count_rating']  = listCountRating
-    dfDistance['average_rating']= listAverageRating
+    
+    dfDistance['coworking_id'] = pd.Series(listCoWorkID)
+    dfDistance['count_rating']  = pd.Series(listCountRating)
+    dfDistance['average_rating']= pd.Series(listAverageRating)
     C = dfDistance['average_rating'].mean()
     m = dfDistance['count_rating'].quantile(0.50)
     q_movies = dfDistance.copy().loc[dfDistance['count_rating'] >= m]
