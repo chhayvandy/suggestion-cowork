@@ -26,6 +26,7 @@ def suggestion_list(request, format=None):
                 result = getUserLocation.getCoworkingForRecommendation(serializer.data)
                 resultRecomment = json.loads(result)
                 resultData = { "success": True,
-                                "data" : resultRecomment}
+                                "data" : resultRecomment
+                                }
             return Response(resultData, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
