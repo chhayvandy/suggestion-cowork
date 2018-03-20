@@ -1,0 +1,1 @@
+web: gunicorn suggestion_cowork.wsgi
