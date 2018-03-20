@@ -25,7 +25,7 @@ SECRET_KEY = '3@jrzg&ed=$hnmxiy5!xr1h8ge+$0hnlw1(worr#2rwzw*=3nt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','https://suggestion-cowork.herokuapp.com']
+ALLOWED_HOSTS = ['localhost','suggestion-cowork.herokuapp.com']
 
 # Application definition
 
