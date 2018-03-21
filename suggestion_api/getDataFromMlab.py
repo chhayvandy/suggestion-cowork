@@ -104,8 +104,7 @@ class getUserLocation():
         dfResultRecomment['average_rating'] = average_rating
         print(dfResultRecomment)
         dfResultRecomment['_id'] = dfResultRecomment['_id'].astype(str)
-        dfResultRecomment = dfResultRecomment.drop(columns=['details','latitude',
-                                'longitude','price_per_hour','approve','rarting','gellery'])
+        dfResultRecomment = dfResultRecomment.drop(columns=['details','price_per_hour','approve','rarting'])
         resultForRecomment = dfResultRecomment.to_json(orient='records')
         # print(resultForRecomment)
         return resultForRecomment
